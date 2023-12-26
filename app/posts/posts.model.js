@@ -7,6 +7,7 @@ const schema = new Schema({
     name: { type: String, required: true },
     location: { type: String, required: true },
     description: { type: String, required: true },
+    feel: { type: String, default: '' },
     wishlist: { type: String, default: '0' },
     createdDate: { type: Date, default: Date.now },
 });

@@ -208,6 +208,7 @@ async function getAllPostsWithLike(id) {
                 name: posts[i].name,
                 location: posts[i].location,
                 description: posts[i].description,
+                feel: posts[i].feel,
                 liked: !(Object.keys(like).length === 0 && like.constructor === Object) ? true : false,
                 createdDate: posts[i].createdDate,
             })
