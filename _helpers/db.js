@@ -1,0 +1,47 @@
+const config = require('config.json'); //local
+// const config = require('config-prod.json'); //prod
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI || config.connectionString, { useCreateIndex: true, useNewUrlParser: true });
+mongoose.Promise = global.Promise;
+
+module.exports = {
+    User: require('../app/users/user.model'),
+    Requests: require('../app/users/requests.model'),
+    Chat: require('../app/users/chat.model'),
+    Post: require('../app/posts/posts.model'),
+    PostLike: require('../app/posts/postslike.model'),
+    AthletePost: require('../app/posts/athleteposts.model'),
+    AthleteJob: require('../app/posts/athletejob.model'),
+    Jobs: require('../app/posts/jobs.model'),
+    JobsAction: require('../app/posts/jobsaction.model'),
+    JobsApply: require('../app/posts/jobsapply.model'),
+    Connect: require('../app/posts/postconnect.model'),
+    JobsSave: require('../app/posts/jobssave.model'),
+    Campaign: require('../app/posts/campaign.model'),
+    CampaignAction: require('../app/posts/campaignaction.model'),
+    CampaignSave: require('../app/posts/campaignsave.model'),
+    Sports: require('../app/posts/sports.model'),
+    Shorts: require('../app/posts/shorts.model'),
+    SportsVideo: require('../app/posts/sportsvideos.model'),
+    SportsVideoInfo: require('../app/posts/sportsvideoinfo.model'),
+    SportsVideoInfoSubs: require('../app/posts/sportsvideoinfos.model'),
+    Cms: require('../app/cms/cms.model'),
+    Payments: require('../app/cms/payments.model'),
+    Support: require('../app/cms/support.model'),
+    Commission: require('../app/cms/commission.model'),
+    Games: require('../app/games/games.model'),
+    GameWinner: require('../app/games/gamewinner.model'),
+    Notification: require('../app/notification/notification.model'),
+    Problems: require('../app/posts/problems.model'),
+    Specialization: require('../app/posts/specialization.model'),
+    TopSpecialization: require('../app/posts/topspecialization.model'),
+    Doctors: require('../app/users/doctor.model'),
+    Schedule: require('../app/posts/schedule.model'),
+    Payment: require('../app/posts/payment.model'),
+    Patient: require('../app/posts/patients.model'),
+    Review: require('../app/posts/review.model'),
+    Supports: require('../app/posts/support.model'),
+    Wishlist: require('../app/posts/wishlist.model'),
+    Appointment: require('../app/posts/appointment.model'),
+    Stats: require('../app/home/stats.mode'),
+};
