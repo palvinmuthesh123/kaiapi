@@ -36,6 +36,7 @@ module.exports = {
     getAllPosts,
     getAllPostsWithLike,
     getPostById,
+    getPostByUId,
     deletePost,
     updatePost,
 
@@ -223,6 +224,14 @@ async function getPostById(id) {
         return { error: true, message: "Post not found" };
     const stats = await Post.findOne({ _id: id }).lean();
     return { success: true, posts: { ...post, ...stats } };
+}
+
+async function getPostByUId(id) {
+    const post = await Post.find({uid: id}).select('-hash').lean();
+    if (!post)
+        return { success: false, message: "Post not found" };
+    else
+        return { success: true, post };
 }
 
 async function deletePost(id) {

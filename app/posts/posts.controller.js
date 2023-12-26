@@ -7,6 +7,7 @@ router.get('/posts', getAllPosts);
 router.get('/cities', getAllCities);
 router.get('/posts/:id', getAllPostsWithLike);
 router.get('/post/:id', getPostById);
+router.get('/userpost/:id', getPostByUId);
 router.delete('/post/:id', deletePost);
 router.post('/post' ,createPost);
 router.post('/updatepost' ,updatePost);
@@ -176,6 +177,12 @@ function getAllPostsWithLike(req, res, next) {
 
 function getPostById(req, res, next) {
     postService.getPostById(req.params.id)
+        .then(product => product ? res.json(product) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+
+function getPostByUId(req, res, next) {
+    postService.getPostByUId(req.params.id)
         .then(product => product ? res.json(product) : res.sendStatus(404))
         .catch(err => next(err));
 }
