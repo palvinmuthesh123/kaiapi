@@ -128,7 +128,9 @@ async function getMessages(id, rec_id){
 }
 
 async function getUserMessages(id){
-    const messages = await Chat.find({from: id}).sort({createdAt: 1}).lean();
+    
+    // const messages = await Chat.find({from: id}).sort({createdAt: 1}).lean();
+    const messages = await Chat.find({$or: [{from: id},{to: id}]}).sort({createdAt: 1}).lean();
     var data = [];
     for(var i = 0; i<messages.length; i++)
     {
