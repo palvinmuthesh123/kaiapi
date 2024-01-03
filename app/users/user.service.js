@@ -134,8 +134,17 @@ async function getUserMessages(id){
     var data = [];
     for(var i = 0; i<messages.length; i++)
     {
-        var frut = await User.find({_id: messages[i].to}).sort({createdAt: 1}).lean()
-        data.push(frut[0]);
+        if(messages[i].to==id)
+        {
+            var frut = await User.find({_id: messages[i].from}).sort({createdAt: 1}).lean()
+            data.push(frut[0]);
+        }
+        else if(messages[i].from==id)
+        {
+            var frut = await User.find({_id: messages[i].to}).sort({createdAt: 1}).lean()
+            data.push(frut[0]);
+        }
+        
     }
     return {success: true, data};
 }
