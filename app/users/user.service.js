@@ -7,6 +7,7 @@ const {Expo} =  require("expo-server-sdk")
 const User = db.User;
 const Requests = db.Requests;
 const Chat = db.Chat;
+const DoctorChat = db.DoctorChat;
 const Stats = db.Stats;
 const Doctors = db.Doctors;
 const city = require('./cities');
@@ -109,9 +110,18 @@ async function getRequests(id){
 }
 
 async function sendMessage(chat){
-    const message = new Chat(chat);
-    await message.save();
-    return {success: true, messages: "Message sent successfully"};
+    if(chat.who=='doctor')
+    {
+        const message = new DoctorChat(chat);
+        await message.save();
+        return {success: true, messages: "Message sent successfully"};
+    }
+    else if(chat.who=='jobs')
+    {
+        const message = new Chat(chat);
+        await message.save();
+        return {success: true, messages: "Message sent successfully"};
+    }
 }
 
 async function getCities(){
@@ -122,31 +132,46 @@ async function getCities(){
     return response
 }
 
-async function getMessages(id, rec_id){
-    const messages = await Chat.find({$or: [{from: id, to: rec_id},{to: id, from: rec_id}]}).sort({createdAt: 1}).lean();
-    return {success: true, messages};
+async function getMessages(id, rec_id, who){
+    if(who=='jobs')
+    {
+        const messages = await Chat.find({$or: [{from: id, to: rec_id},{to: id, from: rec_id}]}).sort({createdAt: 1}).lean();
+        return {success: true, messages};
+    }
+    else if(who=='doctor')
+    {
+        const messages = await DoctorChat.find({$or: [{from: id, to: rec_id},{to: id, from: rec_id}]}).sort({createdAt: 1}).lean();
+        return {success: true, messages};
+    }
 }
 
-async function getUserMessages(id){
-    
-    // const messages = await Chat.find({from: id}).sort({createdAt: 1}).lean();
-    const messages = await Chat.find({$or: [{from: id},{to: id}]}).sort({createdAt: 1}).lean();
-    var data = [];
-    for(var i = 0; i<messages.length; i++)
+async function getUserMessages(id, who){
+    var messages = []
+    if(who=='jobs')
     {
-        if(messages[i].to==id)
-        {
-            var frut = await User.find({_id: messages[i].from}).sort({createdAt: 1}).lean()
-            data.push(frut[0]);
-        }
-        else if(messages[i].from==id)
-        {
-            var frut = await User.find({_id: messages[i].to}).sort({createdAt: 1}).lean()
-            data.push(frut[0]);
-        }
-        
+        messages = await Chat.find({$or: [{from: id},{to: id}]}).sort({createdAt: 1}).lean();
     }
-    return {success: true, data};
+    else if(who=='doctor')
+    {
+        messages = await DoctorChat.find({$or: [{from: id},{to: id}]}).sort({createdAt: 1}).lean();
+    }
+        var data = [];
+        for(var i = 0; i<messages.length; i++)
+        {
+            if(messages[i].to==id)
+            {
+                var frut = await User.find({_id: messages[i].from}).sort({createdAt: 1}).lean()
+                data.push(frut[0]);
+            }
+            else if(messages[i].from==id)
+            {
+                var frut = await User.find({_id: messages[i].to}).sort({createdAt: 1}).lean()
+                data.push(frut[0]);
+            }
+            
+        }
+        return {success: true, data};
+    
 }
 
 async function updateMessage(data){

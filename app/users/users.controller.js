@@ -18,7 +18,7 @@ router.get('/all/:id', getAllWithId);
 router.get('/current', getCurrent);
 router.get('/:id', getById);
 router.get('/cities', getCities);
-router.get('/usermessages/:id', getUserMessages);
+router.get('/usermessages/:id/:who', getUserMessages);
 router.put('/:id', update);
 router.delete('/:id', _delete);
 router.delete('/doctor/:id', deleteDoctor);
@@ -29,14 +29,14 @@ router.delete('/request/:id', deleteRequest);
 router.get('/request/:id', acceptRequest);
 router.post('/address', addAddress);
 router.post('/message' ,sendMessage);
-router.get('/message/:id/:rec_id' ,getMessages);
+router.get('/message/:id/:rec_id/:who' ,getMessages);
 router.post('/updatemessage' ,updateMessage);
 router.post('/update/password', forgotPassword)
 
 module.exports = router;
 
 function getMessages(req, res, next) {
-    userService.getMessages(req.params.id, req.params.rec_id)
+    userService.getMessages(req.params.id, req.params.rec_id, req.params.who)
         .then(users => res.json(users))
         .catch(err => next(err));
 }
@@ -182,7 +182,7 @@ function getById(req, res, next) {
 }
 
 function getUserMessages(req, res, next) {
-    userService.getUserMessages(req.params.id)
+    userService.getUserMessages(req.params.id, req.params.who)
         .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
 }

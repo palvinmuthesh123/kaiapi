@@ -8,6 +8,7 @@ module.exports = {
     User: require('../app/users/user.model'),
     Requests: require('../app/users/requests.model'),
     Chat: require('../app/users/chat.model'),
+    DoctorChat: require('../app/users/doctorchat.model'),
     Post: require('../app/posts/posts.model'),
     PostLike: require('../app/posts/postslike.model'),
     AthletePost: require('../app/posts/athleteposts.model'),
