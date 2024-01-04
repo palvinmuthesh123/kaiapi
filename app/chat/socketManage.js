@@ -32,7 +32,7 @@ module.exports = io => socket => {
 
         var payload = {
             notification: {
-                title: registrationTokens1[0].first_name + " " + registrationTokens1[0].last_name + " sent you a message",
+                title: "You have a new message",
                 body : msg.message
             }
         };
