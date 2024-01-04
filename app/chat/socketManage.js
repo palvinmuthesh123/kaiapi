@@ -28,6 +28,8 @@ module.exports = io => socket => {
         var registrationTokens = await User.find({_id: msg.to}).sort({createdAt: 1}).lean()
         var registrationTokens1 = await User.find({_id: msg.from}).sort({createdAt: 1}).lean()
 
+        console.log(registrationTokens1[0].first_name, registrationTokens1[0].last_name, "MMMMMMMMMMMMMMMMMMMMM")
+
         var payload = {
             notification: {
                 title: registrationTokens1[0].first_name + " " + registrationTokens1[0].last_name + " sent you a message",
