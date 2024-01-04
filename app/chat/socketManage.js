@@ -25,7 +25,7 @@ module.exports = io => socket => {
         //     'tokenFromIosApp'
         // ];
 
-        var registrationTokens = await User.find({_id: msg[i].to}).sort({createdAt: 1}).lean()
+        var registrationTokens = await User.find({_id: msg.to}).sort({createdAt: 1}).lean()
 
         var payload = {
             notification: {
