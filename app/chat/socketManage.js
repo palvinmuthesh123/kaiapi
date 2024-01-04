@@ -34,7 +34,7 @@ module.exports = io => socket => {
             }
         };
         
-        admin.messaging().sendToDevice(registrationTokens.deviceid, payload)
+        admin.messaging().sendToDevice(registrationTokens[0].deviceid, payload)
             .then((response) => {
                 console.log('Sent successfully.\n');
                 console.log(response);
