@@ -175,12 +175,12 @@ async function getUserMessages(id, who){
         {
             if(messages[i].to==id)
             {
-                var frut = await User.find({_id: messages[i].from}).sort({createdAt: 1}).lean()
+                var frut = await Doctors.find({_id: messages[i].from}).sort({createdAt: 1}).lean()
                 data.push(frut[0]);
             }
             else if(messages[i].from==id)
             {
-                var frut = await User.find({_id: messages[i].to}).sort({createdAt: 1}).lean()
+                var frut = await Doctors.find({_id: messages[i].to}).sort({createdAt: 1}).lean()
                 data.push(frut[0]);
             }
             
