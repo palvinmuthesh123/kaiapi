@@ -201,7 +201,12 @@ async function getAllPostsWithLike(ids) {
         for(var i = 0; i<posts.length; i++)
         {
             var like = []
+            var cnt = []
+            var connect = []
             like = await PostLike.find({uid: ids, id: posts[i]._id}).select('-hash');
+            cnt = await PostLike.find({id: posts[i]._id}).select('-hash');
+            connect = await Connect.find({uid: ids, id: posts[i]._id}).select('-hash');
+
             arr.push({
                 _id: posts[i]._id,
                 uid: posts[i].uid,
@@ -211,6 +216,8 @@ async function getAllPostsWithLike(ids) {
                 description: posts[i].description,
                 feel: posts[i].feel,
                 liked: like.length!=0 ? true : false,
+                count: cnt.length,
+                connect: connect.length!=0 ? true : false,
                 createdDate: posts[i].createdDate,
             })
         }
