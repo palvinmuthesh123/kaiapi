@@ -189,7 +189,7 @@ async function getAllPosts() {
     return await Post.find().select('-hash').sort({createdDate: -1});
 }
 
-async function getAllPostsWithLike(id) {
+async function getAllPostsWithLike(ids) {
     const posts = await Post.find().select('-hash');
     var arr = []
     if(posts.length==0)
@@ -200,8 +200,8 @@ async function getAllPostsWithLike(id) {
     {
         for(var i = 0; i<posts.length; i++)
         {
-            var like = {}
-            like = await PostLike.find({id: posts[i]._id, uid: id}).select('-hash');
+            var like = []
+            like = await PostLike.find({uid: ids, id: posts[i]._id}).select('-hash');
             arr.push({
                 _id: posts[i]._id,
                 uid: posts[i].uid,
@@ -210,7 +210,7 @@ async function getAllPostsWithLike(id) {
                 location: posts[i].location,
                 description: posts[i].description,
                 feel: posts[i].feel,
-                liked: !(Object.keys(like).length === 0 && like.constructor === Object) ? true : false,
+                liked: like.length!=0 ? true : false,
                 createdDate: posts[i].createdDate,
             })
         }
