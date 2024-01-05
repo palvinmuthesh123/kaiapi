@@ -146,15 +146,10 @@ async function getMessages(id, rec_id, who){
 }
 
 async function getUserMessages(id, who){
-    var messages = []
+    
     if(who=='jobs')
     {
-        messages = await Chat.find({$or: [{from: id},{to: id}]}).sort({createdAt: 1}).lean();
-    }
-    else if(who=='doctor')
-    {
-        messages = await DoctorChat.find({$or: [{from: id},{to: id}]}).sort({createdAt: 1}).lean();
-    }
+        const messages = await Chat.find({$or: [{from: id},{to: id}]}).sort({createdAt: 1}).lean();
         var data = [];
         for(var i = 0; i<messages.length; i++)
         {
@@ -171,6 +166,28 @@ async function getUserMessages(id, who){
             
         }
         return {success: true, data};
+    }
+    else if(who=='doctor')
+    {
+        const messages = await DoctorChat.find({$or: [{from: id},{to: id}]}).sort({createdAt: 1}).lean();
+        var data = [];
+        for(var i = 0; i<messages.length; i++)
+        {
+            if(messages[i].to==id)
+            {
+                var frut = await User.find({_id: messages[i].from}).sort({createdAt: 1}).lean()
+                data.push(frut[0]);
+            }
+            else if(messages[i].from==id)
+            {
+                var frut = await User.find({_id: messages[i].to}).sort({createdAt: 1}).lean()
+                data.push(frut[0]);
+            }
+            
+        }
+        return {success: true, data};
+    }
+        
     
 }
 
