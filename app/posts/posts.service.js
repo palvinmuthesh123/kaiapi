@@ -59,7 +59,7 @@ module.exports = {
     createAthleteJob,
     getAllAthleteJobs,
     // getAllAthleteJobsById,
-    getAthleteJobById,
+    // getAthleteJobById,
     deleteAthleteJob,
     updateAthleteJob,
     createJob,
