@@ -58,7 +58,7 @@ module.exports = {
     updateAthlete,
     createAthleteJob,
     getAllAthleteJobs,
-    getAllAthleteJobsById,
+    // getAllAthleteJobsById,
     getAthleteJobById,
     deleteAthleteJob,
     updateAthleteJob,
@@ -402,29 +402,29 @@ async function getAllAthleteJobs() {
     return { success: true, arr };
 }
 
-async function getAthleteJobById(id) {
-    const athletejob = await AthleteJob.find({uid: id}).select('-hash').lean();
-    if (athletejob.length==0)
-        return { success: false, message: "Athlete Job not found" };
-    else
-    {
-        var arr = []
-        for(var i = 0; i<athletejob.length; i++)
-        {
-            var appl = await JobsApply.find({id: athletejob[i]._id}).select('-hash').lean();
-            var liis = []
-            for(var j = 0; j<appl.length; j++)
-            {
-                liis.push(await User.findById(appl[i].uid).select('-hash'))
-            }
-            arr.push({
-                job: athletejob[i],
-                applied: liis
-            })
-        }
-        return { success: true, arr };
-    }
-}
+// async function getAthleteJobById(id) {
+//     const athletejob = await AthleteJob.find({uid: id}).select('-hash').lean();
+//     if (athletejob.length==0)
+//         return { success: false, message: "Athlete Job not found" };
+//     else
+//     {
+//         var arr = []
+//         for(var i = 0; i<athletejob.length; i++)
+//         {
+//             var appl = await JobsApply.find({id: athletejob[i]._id}).select('-hash').lean();
+//             var liis = []
+//             for(var j = 0; j<appl.length; j++)
+//             {
+//                 liis.push(await User.findById(appl[i].uid).select('-hash'))
+//             }
+//             arr.push({
+//                 job: athletejob[i],
+//                 applied: liis
+//             })
+//         }
+//         return { success: true, arr };
+//     }
+// }
 
 async function deleteAthleteJob(id) {
     await AthleteJob.findByIdAndRemove(id);
