@@ -58,6 +58,7 @@ module.exports = {
     updateAthlete,
     createAthleteJob,
     getAllAthleteJobs,
+    getAllAthleteJobsById,
     getAthleteJobById,
     deleteAthleteJob,
     updateAthleteJob,
@@ -453,7 +454,7 @@ async function getAllJobs() {
 }
 
 async function getAllJobsById(id) {
-    const jobb =  await Job.find().select('-hash').sort({createdDate: -1});
+    const jobb =  await AthleteJob.find().select('-hash').sort({createdDate: -1});
     var arr = []
     for(var i = 0; i<jobb.length; i++)
     {
@@ -466,16 +467,16 @@ async function getAllJobsById(id) {
             _id: jobb[i]._id,
             uid: jobb[i].uid,
             name: jobb[i].name,
-            post: jobb[i].post,
-            salary: jobb[i].salary,
-            experience: jobb[i].experience,
+            class: jobb[i].class,
+            position: jobb[i].position,
+            level: jobb[i].level,
             description: jobb[i].description,
             location: jobb[i].location,
-            type: jobb[i].type,
-            contract: jobb[i].contract,
-            company_name: jobb[i].company_name,
-            tags: jobb[i].tags,
-            responsibility: jobb[i].responsibility,
+            createdDate: jobb[i].createdDate,
+            __v: jobb[i].__v,
+            id: jobb[i].id,
+            title: jobb[i].title ? jobb[i].title: '',
+            expert_details: await User.findById(jobb[i].uid).select('-hash'),
             joined: join.length!=0 ? true : false,
             saved: save.length!=0 ? true : false,
             createdDate: jobb[i].createdDate
