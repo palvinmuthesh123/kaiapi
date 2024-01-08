@@ -56,6 +56,7 @@ router.post('/athletejobs' ,createAthleteJob);
 router.post('/updateathletejobs' ,updateAthleteJob);
 
 router.get('/jobss', getAllJobs);
+router.get('/jobss/:id', getAllJobsById);
 router.get('/jobs/:id', getJobById);
 router.delete('/jobs/:id', deleteJob);
 router.post('/jobs' ,createJob);
@@ -364,6 +365,12 @@ function createJobsSave(req, res, next) {
 
 function getAllJobs(req, res, next) {
     postService.getAllJobs()
+        .then(products => res.json(products))
+        .catch(err => next(err));
+}
+
+function getAllJobsById(req, res, next) {
+    postService.getAllJobsById(req.params.id)
         .then(products => res.json(products))
         .catch(err => next(err));
 }

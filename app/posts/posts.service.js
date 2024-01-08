@@ -63,6 +63,7 @@ module.exports = {
     updateAthleteJob,
     createJob,
     getAllJobs,
+    getAllJobsById,
     getJobById,
     deleteJob,
     updateJob,
@@ -449,6 +450,38 @@ async function createJob(contents) {
 
 async function getAllJobs() {
     return await Job.find().select('-hash').sort({createdDate: -1});
+}
+
+async function getAllJobsById(id) {
+    const jobb =  await Job.find().select('-hash').sort({createdDate: -1});
+    var arr = []
+    for(var i = 0; i<jobb.length; i++)
+    {
+            var join = []
+            var save = []
+            join = await JobsApply.find({uid: id, id: jobb[i]._id}).select('-hash');
+            save = await JobsSave.find({uid: id, id: jobb[i]._id}).select('-hash');
+
+        arr.push({
+            _id: jobb[i]._id,
+            uid: jobb[i].uid,
+            name: jobb[i].name,
+            post: jobb[i].post,
+            salary: jobb[i].salary,
+            experience: jobb[i].experience,
+            description: jobb[i].description,
+            location: jobb[i].location,
+            type: jobb[i].type,
+            contract: jobb[i].contract,
+            company_name: jobb[i].company_name,
+            tags: jobb[i].tags,
+            responsibility: jobb[i].responsibility,
+            joined: join.length!=0 ? true : false,
+            saved: save.length!=0 ? true : false,
+            createdDate: jobb[i].createdDate
+        })
+    }
+    return { success: true, arr };
 }
 
 async function getJobById(id) {
