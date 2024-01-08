@@ -563,7 +563,7 @@ function getCampaignSaveByUId(req, res, next) {
 
 function deleteCampaignSave(req, res, next) {
     postService.deleteCampaignSave(req.params.id)
-        .then(() => res.json({}))
+        .then(product => product ? res.json(product) : res.sendStatus(404))
         .catch(err => next(err));
 }
 
