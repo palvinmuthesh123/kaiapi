@@ -690,6 +690,7 @@ async function getAllCampaignsById(id) {
             about: camps[i].about,
             joined: join.length!=0 ? true : false,
             saved: save.length!=0 ? true : false,
+            saveid: save.length!=0 ? save[0]._id : '',
             createdDate: camps[i].createdDate
         })
     }
