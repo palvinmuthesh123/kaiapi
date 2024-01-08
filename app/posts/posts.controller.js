@@ -56,7 +56,7 @@ router.post('/athletejobs' ,createAthleteJob);
 router.post('/updateathletejobs' ,updateAthleteJob);
 
 router.get('/jobss', getAllJobs);
-router.get('/jobss/:id', getAllJobsById);
+router.get('/athletejobss/:id', getAllJobsById);
 router.get('/jobs/:id', getJobById);
 router.delete('/jobs/:id', deleteJob);
 router.post('/jobs' ,createJob);
