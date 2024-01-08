@@ -85,6 +85,7 @@ module.exports = {
 
     createCampaign,
     getAllCampaigns,
+    getAllCampaignsById,
     getCampaignById,
     deleteCampaign,
     updateCampaign,
@@ -626,6 +627,39 @@ async function createCampaign(contents) {
 
 async function getAllCampaigns() {
     return await Campaign.find().select('-hash').sort({createdDate: -1});
+}
+
+async function getAllCampaignsById(id) {
+    const camps = await Campaign.find().select('-hash').sort({createdDate: -1});
+    var arr = []
+    for(var i = 0; i<camps.length; i++)
+    {
+        var join = []
+        var save = []
+
+        join = await CampaignAction.find({uid: id, ids: camps[i]._id}).select('-hash');
+        save = await CampaignSave.find({uid: id, id: camps[i]._id}).select('-hash');
+
+        arr.push({
+            _id: camps[i]._id,
+            uid: camps[i].uid,
+            image: camps[i].image,
+            title: camps[i].title,
+            location: camps[i].location,
+            start_date: camps[i].start_date,
+            end_date: camps[i].end_date,
+            venue: camps[i].venue,
+            host_name: camps[i].host_name,
+            email: camps[i].email,
+            description: camps[i].description,
+            eligible_sports: camps[i].eligible_sports,
+            about: camps[i].about,
+            joined: join.length!=0 ? true : false,
+            saved: save.length!=0 ? true : false,
+            createdDate: camps[i].createdDate
+        })
+    }
+    return { success: true, arr };
 }
 
 async function getCampaignById(id) {

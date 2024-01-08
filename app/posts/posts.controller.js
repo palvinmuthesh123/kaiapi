@@ -62,6 +62,7 @@ router.post('/jobs' ,createJob);
 router.post('/updatejobs' ,updateJob);
 
 router.get('/campaigns', getAllCampaigns);
+router.get('/campaigns/:id', getAllCampaignsById);
 router.get('/campaign/:id', getCampaignById);
 router.get('/campaignuser/:id', getCampaignUser);
 router.delete('/campaign/:id', deleteCampaign);
@@ -459,6 +460,12 @@ function createCampaign(req, res, next) {
 
 function getAllCampaigns(req, res, next) {
     postService.getAllCampaigns()
+        .then(products => res.json(products))
+        .catch(err => next(err));
+}
+
+function getAllCampaignsById(req, res, next) {
+    postService.getAllCampaignsById(req.params.id)
         .then(products => res.json(products))
         .catch(err => next(err));
 }
