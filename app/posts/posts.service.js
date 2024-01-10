@@ -11,6 +11,7 @@ const Campaign = db.Campaign;
 const CampaignAction = db.CampaignAction;
 const CampaignSave = db.CampaignSave;
 const Sports = db.Sports;
+const Notification = db.Notification;
 const SportsVideos = db.SportsVideo;
 const SportsVideoInfo = db.SportsVideoInfo;
 const SportsVideoInfos = db.SportsVideoInfoSubs;
@@ -263,9 +264,50 @@ async function updatePost(data) {
     }
 }
 
+async function notific(msg) {
+
+    const notification = new Notification(msg);
+    await notification.save();
+
+    var payload = {
+        notification: {
+            title: "You have a new message",
+            body : msg.name
+        }
+    };
+
+    var registrationTokens = await User.find({_id: msg.to}).select('-hash').lean();
+    
+    admin.messaging().sendToDevice(registrationTokens[0].deviceid, payload)
+        .then((response) => {
+            console.log('Sent successfully.\n');
+            console.log(response);
+            res.status(statusCodes.Ok);
+            res.json(response);
+        })
+        .catch((error) => {
+            console.log('Sent failed.\n');
+            console.log(error);
+            res.status(statusCodes.InternalServerError);
+            res.json(error);
+        });
+
+}
+
 async function createPostLike(contents) {
     const post = new PostLike(contents);
     await post.save();
+
+    var pst = await Post.findById(contents.id).select('-hash').lean();
+
+    var contents = {
+        uid: pst.uid,
+        title: pst.name,
+        name: "Your "+pst.name+ "post got a like"
+    }
+
+    await notific(contents);
+
     return { success: true, message: "Post Liked Successfully" };
 }
 
@@ -628,11 +670,11 @@ async function getConnectById(id) {
             var userr = await User.find({_id: dat[i].uid}).select('-hash').lean();
             arr.push(userr[0])
         }
-        return { error: true, message: "Connect not found" };
+        return { success: true, arr }
     }
     else
     {
-        return { success: true, connect }
+        return { success: false, message: "Not found" };
     }
 }
 

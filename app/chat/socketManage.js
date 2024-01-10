@@ -2,6 +2,7 @@ const db = require('_helpers/db');
 const Chat = db.Chat;
 const User = db.User;
 const DoctorChat = db.DoctorChat;
+const Notification = db.Notification;
 const {admin} = require("../../firebase-config")
 
 
@@ -21,9 +22,14 @@ module.exports = io => socket => {
             await message.save();
         }
 
-        // var registrationTokens = [
-        //     'tokenFromIosApp'
-        // ];
+        var contents = {
+            uid: msg.from,
+            title: msg.message,
+            name: "You have a new chat message"
+        }
+
+        const notification = new Notification(contents);
+        await notification.save();
 
         var registrationTokens = await User.find({_id: msg.to}).sort({createdAt: 1}).lean()
         var registrationTokens1 = await User.find({_id: msg.from}).sort({createdAt: 1}).lean()
