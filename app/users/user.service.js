@@ -399,10 +399,43 @@ async function getAllAthletesByIds(id) {
 
         if(users[i].role=='athlete')
         {
-            var add = { recruit: rec.length!=0 ? true : false }
-            var usr = users[i]
-            Object.assign(usr, add);
-            arr.push(usr)
+            arr.push({
+                email: users[i].email,
+                first_name: users[i].first_name,
+                last_name: users[i].last_name,
+                phone: users[i].phone,
+                gender: users[i].gender,
+                role: users[i].role,
+                avatar: users[i].avatar,
+                active: users[i].active,
+                admin: users[i].admin,
+                age: users[i].age,
+                bio: users[i].bio,
+                latitude: users[i].latitude,
+                longitude: users[i].longitude,
+                description: users[i].description,
+                deviceid: users[i].deviceid,
+                height: users[i].height,
+                weight: users[i].weight,
+                country: users[i].country,
+                sports: users[i].sports,
+                level: users[i].level,
+                school_name: users[i].school_name,
+                school_location: users[i].school_location,
+                experience: users[i].experience,
+                studied_school: users[i].studied_school,
+                studied_degree: users[i].studied_degree,
+                studied_start_year: users[i].studied_start_year,
+                studied_end_year: users[i].studied_end_year,
+                coach_level: users[i].coach_level,
+                coach_sports: users[i].coach_sports,
+                coach_school_name: users[i].coach_school_name,
+                coach_experience: users[i].coach_experience,
+                coach_description: users[i].coach_description,
+                position: users[i].position,
+                city: users[i].city,
+                recruit: rec.length!=0 ? true : false
+            })
         }
     }
     return {success: true, arr}
