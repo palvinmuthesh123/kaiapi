@@ -597,7 +597,7 @@ async function getAllJobsById(id) {
             expert_details: await User.findById(jobb[i].uid).select('-hash'),
             joined: join.length!=0 ? true : false,
             saved: save.length!=0 ? true : false,
-            save_id: save[0]._id,
+            save_id: save.length!=0 ? save[0]._id : "",
             createdDate: jobb[i].createdDate
         })
     }
