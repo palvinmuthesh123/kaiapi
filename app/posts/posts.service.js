@@ -597,6 +597,7 @@ async function getAllJobsById(id) {
             expert_details: await User.findById(jobb[i].uid).select('-hash'),
             joined: join.length!=0 ? true : false,
             saved: save.length!=0 ? true : false,
+            save_id: save[0]._id,
             createdDate: jobb[i].createdDate
         })
     }
@@ -632,12 +633,21 @@ async function createJobsApply(contents) {
     const jobsapply = new JobsApply(contents);
     await jobsapply.save();
 
-    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
+    // var pst = await User.find({_id: contents.uid}).select('-hash').lean();
+    var job = await AthleteJob.find({_id: contents.id}).select('-hash').lean();
+    var pst = await User.find({_id: job}).select('-hash').lean();
+    // id
+
+    // var contents = {
+    //     uid: pst[0]._id,
+    //     title: pst[0].first_name+" "+pst[0].last_name,
+    //     name: "Your application for the job has been submitted successfully",
+    // }
 
     var contents = {
-        uid: contents.uid,
+        uid: pst[0]._id,
         title: pst[0].first_name+" "+pst[0].last_name,
-        name: "Your application for the job has been submitted successfully",
+        name: "Someone has applied for your Job",
     }
 
     await notific(contents);
@@ -699,20 +709,20 @@ async function updateJobsApply(data) {
 }
 
 async function createJobsSave(contents) {
+
     const jobsSave = new JobsSave(contents);
     await jobsSave.save();
 
-    // var pst = await User.findById(contents.uid).select('-hash').lean();
-    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
+    // var job = await AthleteJob.find({_id: contents.id}).select('-hash').lean();
+    // var pst = await User.find({_id: job}).select('-hash').lean();
 
-    var contents = {
-        uid: contents.uid,
-        title: pst[0].first_name+" "+pst[0].last_name,
-        name: "Job has been saved successfully",
-    }
+    // var contents = {
+    //     uid: pst[0]._id,
+    //     title: pst[0].first_name+" "+pst[0].last_name,
+    //     name: "Someone has saved for your Job",
+    // }
 
-    await notific(contents);
-
+    // await notific(contents);
     return { success: true, message: "JobsSave Added Successfully" };
 }
 
