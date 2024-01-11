@@ -458,7 +458,7 @@ async function createRecruit(contents) {
 
     // await notific(contents);
 
-    // return { success: true, message: "Recruited Successfully" };
+    return { success: true, message: "Recruited Successfully" };
 }
 
 async function getAllRecruits() {
