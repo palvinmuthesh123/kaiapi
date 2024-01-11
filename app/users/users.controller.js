@@ -13,6 +13,7 @@ router.post('/register', register);
 router.post('/doctorregister', doctorRegister);
 router.get('/', getAll);
 router.get('/experts', getAllExperts);
+router.get('/atheletes/:id', getAllAthletesByIds);
 router.get('/doctors', getAllDoctor);
 router.get('/all/:id', getAllWithId);
 router.get('/current', getCurrent);
@@ -153,6 +154,12 @@ function getAll(req, res, next) {
 
 function getAllExperts(req, res, next) {
     userService.getAllExperts()
+        .then(users => res.json(users))
+        .catch(err => next(err));
+}
+
+function getAllAthletesByIds(req, res, next) {
+    userService.getAllAthletesByIds(req.params.id)
         .then(users => res.json(users))
         .catch(err => next(err));
 }

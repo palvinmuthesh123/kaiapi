@@ -2,11 +2,13 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
+
 const { sendMail, sendMessages } = require('../utilities');
 const {Expo} =  require("expo-server-sdk")
 const User = db.User;
 const Requests = db.Requests;
 const Chat = db.Chat;
+const Recruit = db.Recruit
 const DoctorChat = db.DoctorChat;
 const Stats = db.Stats;
 const Doctors = db.Doctors;
@@ -17,6 +19,7 @@ module.exports = {
     doctorAuthenticate,
     getAll,
     getAllExperts,
+    getAllAthletesByIds,
     getAllDoctor,
     getById,
     create,
@@ -382,6 +385,23 @@ async function getAllExperts() {
         if(users[i].role=='expert')
         {
             arr.push(users[i])
+        }
+    }
+    return {success: true, arr}
+}
+
+async function getAllAthletesByIds(id) {
+    const users = await User.find().select('-hash');
+    var arr = [];
+    for(var i = 0; i<users.length; i++)
+    {
+        var rec = await Recruit.find({expert_id: id, athelete_id: users[i]._id}).select('-hash');
+
+        if(users[i].role=='athlete')
+        {
+            var usr = users[i]
+            usr['recruit'] = rec.length!=0 ? true : false
+            arr.push(usr)
         }
     }
     return {success: true, arr}
