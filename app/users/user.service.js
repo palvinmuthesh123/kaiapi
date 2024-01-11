@@ -401,7 +401,7 @@ async function getAllAthletesByIds(id) {
         {
             var add = { recruit: rec.length!=0 ? true : false }
             var usr = users[i]
-            await Object.assign(usr, add);
+            Object.assign(usr, add);
             arr.push(usr)
         }
     }
