@@ -57,7 +57,7 @@ router.post('/recruit' ,createRecruit);
 router.post('/updaterecruit' ,updateRecruit);
 
 router.get('/athletejobss', getAllAthleteJobs);
-// router.get('/athletejobs/:id', getAthleteJobById);
+router.get('/athletejobs/:id', getAthleteJobById);
 router.delete('/athletejobs/:id', deleteAthleteJob);
 router.post('/athletejobs' ,createAthleteJob);
 router.post('/updateathletejobs' ,updateAthleteJob);
@@ -352,11 +352,11 @@ function getAllAthleteJobs(req, res, next) {
         .catch(err => next(err));
 }
 
-// function getAthleteJobById(req, res, next) {
-//     postService.getAthleteJobById(req.params.id)
-//         .then(product => product ? res.json(product) : res.sendStatus(404))
-//         .catch(err => next(err));
-// }
+function getAthleteJobById(req, res, next) {
+    postService.getAthleteJobById(req.params.id)
+        .then(product => product ? res.json(product) : res.sendStatus(404))
+        .catch(err => next(err));
+}
 
 function deleteAthleteJob(req, res, next) {
     postService.deleteAthleteJob(req.params.id)
