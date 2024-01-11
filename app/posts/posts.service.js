@@ -364,7 +364,7 @@ async function createShort(contents) {
     const short = new Shorts(contents);
     await short.save();
 
-    var pst = await User.findById(contents.id).select('-hash').lean();
+    var pst = await User.findById(contents.uid).select('-hash').lean();
 
     var contents = {
         uid: contents.uid,
@@ -447,6 +447,17 @@ async function updateAthlete(data) {
 async function createRecruit(contents) {
     const recruit = new Recruit(contents);
     await recruit.save();
+
+    var pst = await User.findById(contents.id).select('-hash').lean();
+
+    var contents = {
+        uid: contents.expert_id,
+        title: pst.first_name+" "+pst.last_name,
+        name: "You have recruited an athelete",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "Recruited Successfully" };
 }
 
@@ -759,7 +770,7 @@ async function createConnect(contents) {
     var pst = await User.findById(contents.uid).select('-hash').lean();
 
     var contents = {
-        uid: pst.uid,
+        uid: contents.uid,
         title: pst.first_name+" "+pst.last_name,
         name: "Your connection has been sent",
     }
@@ -816,7 +827,7 @@ async function createCampaign(contents) {
     var pst = await User.findById(contents.uid).select('-hash').lean();
 
     var contents = {
-        uid: pst.uid,
+        uid: contents.uid,
         title: pst.first_name+" "+pst.last_name,
         name: "Your campaign has been created successfully",
     }
@@ -904,7 +915,7 @@ async function createCampaignAction(contents) {
     var pst = await User.findById(contents.uid).select('-hash').lean();
 
     var contents = {
-        uid: pst.uid,
+        uid: contents.uid,
         title: pst.first_name+" "+pst.last_name,
         name: "You have joined the campaign",
     }
@@ -986,7 +997,7 @@ async function createCampaignSave(contents) {
     var pst = await User.findById(contents.id).select('-hash').lean();
 
     var contents = {
-        uid: pst.uid,
+        uid: contents.uid,
         title: pst.first_name+" "+pst.last_name,
         name: "Campaign has been saved",
     }
@@ -1485,6 +1496,17 @@ async function updatePatient(data) {
 async function createReview(contents) {
     const review = new Review(contents);
     await review.save();
+
+    var pst = await User.findById(contents.uid).select('-hash').lean();
+
+    var contents = {
+        uid: contents.uid,
+        title: pst.first_name+" "+pst.last_name,
+        name: "Your riview has been submitted",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "Review Info Added Successfully" };
 }
 
