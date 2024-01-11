@@ -448,15 +448,15 @@ async function createRecruit(contents) {
     const recruit = new Recruit(contents);
     await recruit.save();
 
-    var pst = await User.findById(contents.expert_id).select('-hash').lean();
+    // var pst = await User.findById(contents.expert_id).select('-hash').lean();
 
-    var contents = {
-        uid: contents.expert_id,
-        title: pst.first_name+" "+pst.last_name,
-        name: "You have recruited an athelete",
-    }
+    // var contents = {
+    //     uid: contents.expert_id,
+    //     title: pst.first_name+" "+pst.last_name,
+    //     name: "You have recruited an athelete",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "Recruited Successfully" };
 }
