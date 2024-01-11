@@ -368,7 +368,7 @@ async function createShort(contents) {
 
     var contents = {
         uid: contents.uid,
-        title: "No name",
+        title: pst.first_name+" "+pst.last_name,
         name: "Your shorts is created successfully",
     }
 
@@ -448,15 +448,15 @@ async function createRecruit(contents) {
     const recruit = new Recruit(contents);
     await recruit.save();
 
-    var pst = await User.findById(contents.id).select('-hash').lean();
+    var pst = await User.findById(contents.expert_id).select('-hash').lean();
 
-    // var contents = {
-    //     uid: contents.expert_id,
-    //     title: "No name",
-    //     name: "You have recruited an athelete",
-    // }
+    var contents = {
+        uid: contents.expert_id,
+        title: pst.first_name+" "+pst.last_name,
+        name: "You have recruited an athelete",
+    }
 
-    // await notific(contents);
+    await notific(contents);
 
     return { success: true, message: "Recruited Successfully" };
 }
@@ -636,7 +636,7 @@ async function createJobsApply(contents) {
 
     var contents = {
         uid: contents.uid,
-        title: "No name",
+        title: pst.first_name+" "+pst.last_name,
         name: "Your application for the job has been submitted successfully",
     }
 
@@ -706,7 +706,7 @@ async function createJobsSave(contents) {
 
     var contents = {
         uid: pst.uid,
-        title: "No name",
+        title: pst.first_name+" "+pst.last_name,
         name: "Job has been saved successfully",
     }
 
@@ -771,7 +771,7 @@ async function createConnect(contents) {
 
     var contents = {
         uid: contents.uid,
-        title: "No name",
+        title: pst.first_name+" "+pst.last_name,
         name: "Your connection has been sent",
     }
 
@@ -828,7 +828,7 @@ async function createCampaign(contents) {
 
     var contents = {
         uid: contents.uid,
-        title: "No name",
+        title: pst.first_name+" "+pst.last_name,
         name: "Your campaign has been created successfully",
     }
 
@@ -916,7 +916,7 @@ async function createCampaignAction(contents) {
 
     var contents = {
         uid: contents.uid,
-        title: "No name",
+        title: pst.first_name+" "+pst.last_name,
         name: "You have joined the campaign",
     }
 
@@ -998,7 +998,7 @@ async function createCampaignSave(contents) {
 
     var contents = {
         uid: contents.uid,
-        title: "No name",
+        title: pst.first_name+" "+pst.last_name,
         name: "Campaign has been saved",
     }
 
@@ -1501,7 +1501,7 @@ async function createReview(contents) {
 
     var contents = {
         uid: contents.uid,
-        title: "No name",
+        title: pst.first_name+" "+pst.last_name,
         name: "Your riview has been submitted",
     }
 
@@ -1617,7 +1617,7 @@ async function createSupport(contents) {
 
     var contents = {
         uid: contents.id,
-        title: "No name",
+        title: pst.first_name+" "+pst.last_name,
         name: "Your ticket has been raised",
     }
 
