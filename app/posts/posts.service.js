@@ -319,7 +319,7 @@ async function createPostLike(contents) {
     var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
-        uid: pst[0]._id,
+        uid: contents.uid,
         title: pst[0].first_name,
         name: "Your "+pst.name+ "post got a like",
     }
@@ -632,11 +632,11 @@ async function createJobsApply(contents) {
     const jobsapply = new JobsApply(contents);
     await jobsapply.save();
 
-    var pst = await User.findById(contents.uid).select('-hash').lean();
+    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
         uid: contents.uid,
-        title: pst.first_name+" "+pst.last_name,
+        title: pst[0].first_name+" "+pst[0].last_name,
         name: "Your application for the job has been submitted successfully",
     }
 
@@ -702,11 +702,12 @@ async function createJobsSave(contents) {
     const jobsSave = new JobsSave(contents);
     await jobsSave.save();
 
-    var pst = await User.findById(contents.uid).select('-hash').lean();
+    // var pst = await User.findById(contents.uid).select('-hash').lean();
+    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
-        uid: pst.uid,
-        title: pst.first_name+" "+pst.last_name,
+        uid: contents.uid,
+        title: pst[0].first_name+" "+pst[0].last_name,
         name: "Job has been saved successfully",
     }
 
@@ -767,11 +768,11 @@ async function createConnect(contents) {
     const connect = new Connect(contents);
     await connect.save();
 
-    var pst = await User.findById(contents.uid).select('-hash').lean();
+    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
         uid: contents.uid,
-        title: pst.first_name+" "+pst.last_name,
+        title: pst[0].first_name+" "+pst[0].last_name,
         name: "Your connection has been sent",
     }
 
@@ -824,11 +825,11 @@ async function createCampaign(contents) {
     const campaign = new Campaign(contents);
     await campaign.save();
 
-    var pst = await User.findById(contents.uid).select('-hash').lean();
+    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
         uid: contents.uid,
-        title: pst.first_name+" "+pst.last_name,
+        title: pst[0].first_name+" "+pst[0].last_name,
         name: "Your campaign has been created successfully",
     }
 
@@ -912,11 +913,11 @@ async function createCampaignAction(contents) {
     const campaignAction = new CampaignAction(contents);
     await campaignAction.save();
 
-    var pst = await User.findById(contents.uid).select('-hash').lean();
+    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
         uid: contents.uid,
-        title: pst.first_name+" "+pst.last_name,
+        title: pst[0].first_name+" "+pst[0].last_name,
         name: "You have joined the campaign",
     }
 
@@ -994,11 +995,11 @@ async function createCampaignSave(contents) {
     const campaignSave = new CampaignSave(contents);
     await campaignSave.save();
 
-    var pst = await User.findById(contents.id).select('-hash').lean();
+    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
         uid: contents.uid,
-        title: pst.first_name+" "+pst.last_name,
+        title: pst[0].first_name+" "+pst[0].last_name,
         name: "Campaign has been saved",
     }
 
@@ -1497,11 +1498,11 @@ async function createReview(contents) {
     const review = new Review(contents);
     await review.save();
 
-    var pst = await User.findById(contents.uid).select('-hash').lean();
+    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
         uid: contents.uid,
-        title: pst.first_name+" "+pst.last_name,
+        title: pst[0].first_name+" "+pst[0].last_name,
         name: "Your riview has been submitted",
     }
 
@@ -1613,11 +1614,11 @@ async function createSupport(contents) {
     const supports = new Supports(contents);
     await supports.save();
 
-    var pst = await User.findById(contents.id).select('-hash').lean();
+    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
         uid: contents.id,
-        title: pst.first_name+" "+pst.last_name,
+        title: pst[0].first_name+" "+pst[0].last_name,
         name: "Your ticket has been raised",
     }
 
