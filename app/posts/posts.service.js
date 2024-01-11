@@ -107,6 +107,7 @@ module.exports = {
     createSport,
     getAllSports,
     getSportsWithDatas,
+    getSportsWithVideo,
     getSportById,
     deleteSport,
     updateSport,
@@ -940,6 +941,41 @@ async function getSportsWithDatas(id) {
     const sport2 = await SportsVideoInfo.find({sports_id: id}).select('-hash');
     const sport3 = await SportsVideoInfos.find({sports_id: id}).select('-hash');
     return { success: true, data: {sport: sport[0], subsport: sport1, subsport1: sport2, subsport2: sport3}};
+}
+
+async function getSportsWithVideo() {
+    const sport =  await Sports.find().select('-hash');
+    var arr = []
+    for(var i = 0; i<sport.length; i++)
+    {
+        var sport1 = await SportsVideos.find({sports_id: sport[i]._id}).select('-hash');
+        var sport2 = await SportsVideoInfo.find({sports_id: sport[i]._id}).select('-hash');
+        var sport3 = await SportsVideoInfos.find({sports_id: sport[i]._id}).select('-hash');
+        var arr1 = []
+        var arr2 = []
+        var arr3 = []
+        for(var j = 0; j<sport1.length; j++)
+        {
+            arr1.push(sport1[j].video)
+        }
+        for(var k = 0; k<sport2.length; k++)
+        {
+            arr2.push(sport2[k].video)
+        }
+        for(var h = 0; h<sport3.length; h++)
+        {
+            arr3.push(sport3[h].video)
+        }
+       
+        var arr4 = arr1.concat(arr2, arr3);
+        
+        arr.push({
+            sports: sport[i],
+            videos: arr4
+        })
+    }
+    
+    return { success: true, arr};
 }
 
 async function deleteSport(id) {

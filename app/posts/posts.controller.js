@@ -27,6 +27,7 @@ router.post('/updatepostconnect' ,updateConnect);
 router.get('/shorts', getAllShorts);
 router.get('/short/:id', getShortById);
 router.get('/shortdata/:id', getSportsWithDatas);
+router.get('/shortsvideo', getSportsWithVideo);
 router.delete('/short/:id', deleteShort);
 router.post('/short' ,createShort);
 router.post('/updateshort' ,updateShort);
@@ -281,6 +282,12 @@ function getShortById(req, res, next) {
 
 function getSportsWithDatas(req, res, next) {
     postService.getSportsWithDatas(req.params.id)
+        .then(product => product ? res.json(product) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+
+function getSportsWithVideo(req, res, next) {
+    postService.getSportsWithVideo()
         .then(product => product ? res.json(product) : res.sendStatus(404))
         .catch(err => next(err));
 }
