@@ -399,8 +399,9 @@ async function getAllAthletesByIds(id) {
 
         if(users[i].role=='athlete')
         {
-            var usr = users[i]
-            usr['recruit'] = rec.length!=0 ? true : false
+            var add = { recruit: rec.length!=0 ? true : false }
+            var usr = { ...users[i], ...add}
+            // usr['recruit'] = rec.length!=0 ? true : false
             arr.push(usr)
         }
     }
