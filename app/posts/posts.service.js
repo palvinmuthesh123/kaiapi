@@ -316,11 +316,11 @@ async function createPostLike(contents) {
     const post = new PostLike(contents);
     await post.save();
 
-    var pst = await Post.findById(contents.id).select('-hash').lean();
+    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
-        uid: pst.uid,
-        title: pst.name,
+        uid: pst[0]._id,
+        title: pst[0].first_name,
         name: "Your "+pst.name+ "post got a like",
     }
 
@@ -364,11 +364,11 @@ async function createShort(contents) {
     const short = new Shorts(contents);
     await short.save();
 
-    var pst = await User.findById(contents.uid).select('-hash').lean();
+    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
     var contents = {
         uid: contents.uid,
-        title: pst.first_name+" "+pst.last_name,
+        title: pst[0].first_name+" "+pst[0].last_name,
         name: "Your shorts is created successfully",
     }
 

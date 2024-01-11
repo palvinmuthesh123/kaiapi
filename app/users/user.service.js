@@ -400,6 +400,7 @@ async function getAllAthletesByIds(id) {
         if(users[i].role=='athlete')
         {
             arr.push({
+                _id: users[i]._id,
                 email: users[i].email,
                 first_name: users[i].first_name,
                 last_name: users[i].last_name,
