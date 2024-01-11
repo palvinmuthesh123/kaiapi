@@ -2,6 +2,7 @@ const db = require('_helpers/db');
 const Post = db.Post;
 const Athlete = db.AthletePost;
 const AthleteJob = db.AthleteJob;
+const Recruit = db.Recruit;
 const Job = db.Jobs;
 const Shorts = db.Shorts;
 const JobsApply = db.JobsApply;
@@ -57,6 +58,11 @@ module.exports = {
     getAthleteById,
     deleteAthlete,
     updateAthlete,
+    createRecruit,
+    getAllRecruits,
+    getRecruitById,
+    deleteRecruit,
+    updateRecruit,
     createAthleteJob,
     getAllAthleteJobs,
     // getAllAthleteJobsById,
@@ -187,6 +193,17 @@ async function getAllCities() {
 async function createPost(contents) {
     const post = new Post(contents);
     await post.save();
+
+    // var pst = await Post.findById(contents.id).select('-hash').lean();
+
+    var contents = {
+        uid: contents.uid,
+        title: contents.name,
+        name: "Your post is created successfully",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "Post Added Successfully" };
 }
 
@@ -277,7 +294,7 @@ async function notific(msg) {
         }
     };
 
-    var registrationTokens = await User.find({_id: msg.to}).select('-hash').lean();
+    var registrationTokens = await User.find({_id: msg.uid}).select('-hash').lean();
     
     admin.messaging().sendToDevice(registrationTokens[0].deviceid, payload)
         .then((response) => {
@@ -304,7 +321,7 @@ async function createPostLike(contents) {
     var contents = {
         uid: pst.uid,
         title: pst.name,
-        name: "Your "+pst.name+ "post got a like"
+        name: "Your "+pst.name+ "post got a like",
     }
 
     await notific(contents);
@@ -346,6 +363,17 @@ async function updatePostLike(data) {
 async function createShort(contents) {
     const short = new Shorts(contents);
     await short.save();
+
+    var pst = await User.findById(contents.id).select('-hash').lean();
+
+    var contents = {
+        uid: contents.uid,
+        title: pst.first_name+" "+pst.last_name,
+        name: "Your shorts is created successfully",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "Shorts Added Successfully" };
 }
 
@@ -412,6 +440,42 @@ async function updateAthlete(data) {
             athletepost[x] =  data.new[x]
         })
         await athletepost.save();
+    }
+}
+
+
+async function createRecruit(contents) {
+    const recruit = new Recruit(contents);
+    await recruit.save();
+    return { success: true, message: "Recruited Successfully" };
+}
+
+async function getAllRecruits() {
+    return await Recruit.find().select('-hash');
+}
+
+async function getRecruitById(id) {
+    const recruit = await Recruit.findById(id).select('-hash').lean();
+    if (!recruit)
+    return { error: true, message: "Recruit not found" };
+    else
+    return { success: true, recruit };
+}
+
+async function deleteRecruit(id) {
+    await Recruit.findByIdAndRemove(id);
+    return { success: true, message:"Successfully Deleted" };
+}
+
+async function updateRecruit(data) {
+    const recruit = await Recruit.findById(data.id);
+    // validate
+    if (recruit) {
+        let keys = Object.keys(data.new)
+        keys.map(x=>{
+            recruit[x] =  data.new[x]
+        })
+        await recruit.save();
     }
 }
 
@@ -556,6 +620,17 @@ async function updateJob(data) {
 async function createJobsApply(contents) {
     const jobsapply = new JobsApply(contents);
     await jobsapply.save();
+
+    var pst = await User.findById(contents.uid).select('-hash').lean();
+
+    var contents = {
+        uid: contents.uid,
+        title: pst.first_name+" "+pst.last_name,
+        name: "Your application for the job has been submitted successfully",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "Job Applied Successfully" };
 }
 
@@ -566,7 +641,23 @@ async function getAllJobsApplys() {
 async function getJobsApplyById(id) {
     const jobsapply = await JobsApply.find({uid: id}).select('-hash').lean();
     var arr = []
-    if (!jobsapply)
+    if (jobsapply.length==0)
+        return { success: false, message: "Jobs Apply not found" };
+    else
+    {
+        for(var i = 0; i<jobsapply.length; i++)
+        {
+            var job = await AthleteJob.find({_id: jobsapply[i].id}).select('-hash').lean()
+            arr.push(job[0])
+        }
+        return { success: true, arr };
+    }
+}
+
+async function getJobsApplyById(id) {
+    const jobsapply = await JobsApply.find({uid: id}).select('-hash').lean();
+    var arr = []
+    if (jobsapply.length==0)
         return { success: false, message: "Jobs Apply not found" };
     else
     {
@@ -599,6 +690,17 @@ async function updateJobsApply(data) {
 async function createJobsSave(contents) {
     const jobsSave = new JobsSave(contents);
     await jobsSave.save();
+
+    var pst = await User.findById(contents.uid).select('-hash').lean();
+
+    var contents = {
+        uid: pst.uid,
+        title: pst.first_name+" "+pst.last_name,
+        name: "Job has been saved successfully",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "JobsSave Added Successfully" };
 }
 
@@ -653,6 +755,17 @@ async function updateJobsSave(data) {
 async function createConnect(contents) {
     const connect = new Connect(contents);
     await connect.save();
+
+    var pst = await User.findById(contents.uid).select('-hash').lean();
+
+    var contents = {
+        uid: pst.uid,
+        title: pst.first_name+" "+pst.last_name,
+        name: "Your connection has been sent",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "Connect Added Successfully" };
 }
 
@@ -699,6 +812,17 @@ async function updateConnect(data) {
 async function createCampaign(contents) {
     const campaign = new Campaign(contents);
     await campaign.save();
+
+    var pst = await User.findById(contents.uid).select('-hash').lean();
+
+    var contents = {
+        uid: pst.uid,
+        title: pst.first_name+" "+pst.last_name,
+        name: "Your campaign has been created successfully",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "campaign Added Successfully" };
 }
 
@@ -776,6 +900,17 @@ async function updateCampaign(data) {
 async function createCampaignAction(contents) {
     const campaignAction = new CampaignAction(contents);
     await campaignAction.save();
+
+    var pst = await User.findById(contents.uid).select('-hash').lean();
+
+    var contents = {
+        uid: pst.uid,
+        title: pst.first_name+" "+pst.last_name,
+        name: "You have joined the campaign",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "campaign Added Successfully" };
 }
 
@@ -847,6 +982,17 @@ async function updateCampaignAction(data) {
 async function createCampaignSave(contents) {
     const campaignSave = new CampaignSave(contents);
     await campaignSave.save();
+
+    var pst = await User.findById(contents.id).select('-hash').lean();
+
+    var contents = {
+        uid: pst.uid,
+        title: pst.first_name+" "+pst.last_name,
+        name: "Campaign has been saved",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "campaign Added Successfully" };
 }
 
@@ -1213,6 +1359,17 @@ async function updateTopSpecialization(data) {
 async function createAppointment(contents) {
     const appointment = new Appointment(contents);
     await appointment.save();
+
+    // var pst = await Post.findById(contents.id).select('-hash').lean();
+
+    var contents = {
+        uid: contents.uid,
+        title: contents.name,
+        name: "Your appointment has been booked",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "Appointment Info Added Successfully", appointmentid: appointment._id };
 }
 
@@ -1433,6 +1590,17 @@ async function updateJobAction(data) {
 async function createSupport(contents) {
     const supports = new Supports(contents);
     await supports.save();
+
+    var pst = await User.findById(contents.id).select('-hash').lean();
+
+    var contents = {
+        uid: contents.id,
+        title: pst.first_name+" "+pst.last_name,
+        name: "Your ticket has been raised",
+    }
+
+    await notific(contents);
+
     return { success: true, message: "Supports Added Successfully" };
 }
 

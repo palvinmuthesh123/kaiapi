@@ -16,6 +16,7 @@ module.exports = {
     Jobs: require('../app/posts/jobs.model'),
     JobsAction: require('../app/posts/jobsaction.model'),
     JobsApply: require('../app/posts/jobsapply.model'),
+    Recruit: require('../app/posts/recruit.model'),
     Connect: require('../app/posts/postconnect.model'),
     JobsSave: require('../app/posts/jobssave.model'),
     Campaign: require('../app/posts/campaign.model'),

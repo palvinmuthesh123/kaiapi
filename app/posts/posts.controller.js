@@ -50,6 +50,12 @@ router.delete('/jobsapply/:id', deleteJobsApply);
 router.post('/jobsapply' ,createJobsApply);
 router.post('/updatejobsapply' ,updateJobsApply);
 
+router.get('/recruits', getAllRecruits);
+router.get('/recruit/:id', getRecruitById);
+router.delete('/recruit/:id', deleteRecruit);
+router.post('/recruit' ,createRecruit);
+router.post('/updaterecruit' ,updateRecruit);
+
 router.get('/athletejobss', getAllAthleteJobs);
 // router.get('/athletejobs/:id', getAthleteJobById);
 router.delete('/athletejobs/:id', deleteAthleteJob);
@@ -462,6 +468,36 @@ function updateJobsApply(req, res, next) {
 
 function createJobsApply(req, res, next) {
     postService.createJobsApply(req.body)
+        .then(product => res.json(product))
+        .catch(err => next(err));
+}
+
+function getAllRecruits(req, res, next) {
+    postService.getAllRecruits()
+        .then(products => res.json(products))
+        .catch(err => next(err));
+}
+
+function getRecruitById(req, res, next) {
+    postService.getRecruitById(req.params.id)
+        .then(product => product ? res.json(product) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+
+function deleteRecruit(req, res, next) {
+    postService.deleteRecruit(req.params.id)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function updateRecruit(req, res, next) {
+    postService.updateRecruit(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function createRecruit(req, res, next) {
+    postService.createRecruit(req.body)
         .then(product => res.json(product))
         .catch(err => next(err));
 }
