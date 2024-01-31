@@ -747,11 +747,24 @@ async function getJobsSaveByUId(id) {
     if (!jobsSave)
     return { success: false, message: "JobsSave not found" };
     else
-    { 
+    {
         for(var i = 0; i<jobsSave.length; i++)
         {
             var job = await AthleteJob.find({_id: jobsSave[i].id}).select('-hash').lean()
-            camp.push(job[0])
+            camp.push({
+                job_id: job[0]._id,
+                save_id: jobsSave[i].id,
+                uid: job[0].uid,
+                name: job[0].name,
+                class: job[0].class,
+                position: job[0].position,
+                level: job[0].level,
+                description: job[0].description,
+                location: job[0].location,
+                createdDate: job[0].createdDate,
+                __v: job[0].__v
+            })
+            // camp.push(job[0])
         }
         return { success: true, camp };
     }
