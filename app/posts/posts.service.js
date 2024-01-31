@@ -196,13 +196,13 @@ async function createPost(contents) {
 
     // var pst = await Post.findById(contents.id).select('-hash').lean();
 
-    var contents = {
-        uid: contents.uid,
-        title: contents.name,
-        name: "Your post is created successfully",
-    }
+    // var contents = {
+    //     uid: contents.uid,
+    //     title: contents.name,
+    //     name: "Your post is created successfully",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "Post Added Successfully" };
 }
@@ -318,13 +318,13 @@ async function createPostLike(contents) {
 
     var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
-    var contents = {
-        uid: contents.uid,
-        title: pst[0].first_name,
-        name: "Your "+pst.name+ "post got a like",
-    }
+    // var contents = {
+    //     uid: contents.uid,
+    //     title: pst[0].first_name,
+    //     name: "Your "+pst.name+ "post got a like",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "Post Liked Successfully" };
 }
@@ -366,13 +366,13 @@ async function createShort(contents) {
 
     var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
-    var contents = {
-        uid: contents.uid,
-        title: pst[0].first_name+" "+pst[0].last_name,
-        name: "Your shorts is created successfully",
-    }
+    // var contents = {
+    //     uid: contents.uid,
+    //     title: pst[0].first_name+" "+pst[0].last_name,
+    //     name: "Your shorts is created successfully",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "Shorts Added Successfully" };
 }
@@ -634,8 +634,8 @@ async function createJobsApply(contents) {
     await jobsapply.save();
 
     // var pst = await User.find({_id: contents.uid}).select('-hash').lean();
-    var job = await AthleteJob.find({_id: contents.id}).select('-hash').lean();
-    var pst = await User.find({_id: job}).select('-hash').lean();
+    // var job = await AthleteJob.find({_id: contents.id}).select('-hash').lean();
+    // var pst = await User.find({_id: job}).select('-hash').lean();
     // id
 
     // var contents = {
@@ -644,13 +644,13 @@ async function createJobsApply(contents) {
     //     name: "Your application for the job has been submitted successfully",
     // }
 
-    var contents = {
-        uid: pst[0]._id,
-        title: pst[0].first_name+" "+pst[0].last_name,
-        name: "Someone has applied for your Job",
-    }
+    // var contents = {
+    //     uid: pst[0]._id,
+    //     title: pst[0].first_name+" "+pst[0].last_name,
+    //     name: "Someone has applied for your Job",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "Job Applied Successfully" };
 }
@@ -778,15 +778,15 @@ async function createConnect(contents) {
     const connect = new Connect(contents);
     await connect.save();
 
-    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
+    // var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
-    var contents = {
-        uid: contents.uid,
-        title: pst[0].first_name+" "+pst[0].last_name,
-        name: "Your connection has been sent",
-    }
+    // var contents = {
+    //     uid: contents.uid,
+    //     title: pst[0].first_name+" "+pst[0].last_name,
+    //     name: "Your connection has been sent",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "Connect Added Successfully" };
 }
@@ -835,15 +835,15 @@ async function createCampaign(contents) {
     const campaign = new Campaign(contents);
     await campaign.save();
 
-    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
+    // var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
-    var contents = {
-        uid: contents.uid,
-        title: pst[0].first_name+" "+pst[0].last_name,
-        name: "Your campaign has been created successfully",
-    }
+    // var contents = {
+    //     uid: contents.uid,
+    //     title: pst[0].first_name+" "+pst[0].last_name,
+    //     name: "Your campaign has been created successfully",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "campaign Added Successfully" };
 }
@@ -923,15 +923,15 @@ async function createCampaignAction(contents) {
     const campaignAction = new CampaignAction(contents);
     await campaignAction.save();
 
-    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
+    // var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
-    var contents = {
-        uid: contents.uid,
-        title: pst[0].first_name+" "+pst[0].last_name,
-        name: "You have joined the campaign",
-    }
+    // var contents = {
+    //     uid: contents.uid,
+    //     title: pst[0].first_name+" "+pst[0].last_name,
+    //     name: "You have joined the campaign",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "campaign Added Successfully" };
 }
@@ -1005,15 +1005,15 @@ async function createCampaignSave(contents) {
     const campaignSave = new CampaignSave(contents);
     await campaignSave.save();
 
-    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
+    // var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
-    var contents = {
-        uid: contents.uid,
-        title: pst[0].first_name+" "+pst[0].last_name,
-        name: "Campaign has been saved",
-    }
+    // var contents = {
+    //     uid: contents.uid,
+    //     title: pst[0].first_name+" "+pst[0].last_name,
+    //     name: "Campaign has been saved",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "campaign Added Successfully" };
 }
@@ -1508,15 +1508,15 @@ async function createReview(contents) {
     const review = new Review(contents);
     await review.save();
 
-    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
+    // var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
-    var contents = {
-        uid: contents.uid,
-        title: pst[0].first_name+" "+pst[0].last_name,
-        name: "Your riview has been submitted",
-    }
+    // var contents = {
+    //     uid: contents.uid,
+    //     title: pst[0].first_name+" "+pst[0].last_name,
+    //     name: "Your riview has been submitted",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "Review Info Added Successfully" };
 }
@@ -1624,15 +1624,15 @@ async function createSupport(contents) {
     const supports = new Supports(contents);
     await supports.save();
 
-    var pst = await User.find({_id: contents.uid}).select('-hash').lean();
+    // var pst = await User.find({_id: contents.uid}).select('-hash').lean();
 
-    var contents = {
-        uid: contents.id,
-        title: pst[0].first_name+" "+pst[0].last_name,
-        name: "Your ticket has been raised",
-    }
+    // var contents = {
+    //     uid: contents.id,
+    //     title: pst[0].first_name+" "+pst[0].last_name,
+    //     name: "Your ticket has been raised",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "Supports Added Successfully" };
 }
