@@ -1384,13 +1384,13 @@ async function createAppointment(contents) {
 
     // var pst = await Post.findById(contents.id).select('-hash').lean();
 
-    var contents = {
-        uid: contents.uid,
-        title: contents.name,
-        name: "Your appointment has been booked",
-    }
+    // var contents = {
+    //     uid: contents.uid,
+    //     title: contents.name,
+    //     name: "Your appointment has been booked",
+    // }
 
-    await notific(contents);
+    // await notific(contents);
 
     return { success: true, message: "Appointment Info Added Successfully", appointmentid: appointment._id };
 }
