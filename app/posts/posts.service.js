@@ -753,7 +753,7 @@ async function getJobsSaveByUId(id) {
             var job = await AthleteJob.find({_id: jobsSave[i].id}).select('-hash').lean()
             camp.push({
                 job_id: job[0]._id,
-                save_id: jobsSave[i].id,
+                save_id: jobsSave[i]._id,
                 uid: job[0].uid,
                 name: job[0].name,
                 class: job[0].class,
