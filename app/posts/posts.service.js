@@ -810,7 +810,7 @@ async function getAllConnects() {
 
 async function getConnectById(id) {
     const connect = await Connect.find({uid: id}).select('-hash').lean();
-    if (!connect)
+    if (connect.length!=0)
     {
         var arr = []
         for(var i = 0; i<connect.length; i++)
