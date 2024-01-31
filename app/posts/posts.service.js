@@ -816,7 +816,7 @@ async function getConnectById(id) {
         for(var i = 0; i<connect.length; i++)
         {
             var dat = await Post.find({_id: connect[i].id}).select('-hash').lean();
-            var userr = await User.find({_id: dat[i].uid}).select('-hash').lean();
+            var userr = await User.find({_id: dat[0].uid}).select('-hash').lean();
             arr.push(userr[0])
         }
         return { success: true, arr }
