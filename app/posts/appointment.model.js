@@ -16,7 +16,7 @@ const schema = new Schema({
     patient_blood: { type: String, required: true },
     patient_gender: { type: String, required: true },
     problem: { type: String, required: true },
-    report: { type: String, required: true },
+    report: { type: String },
     description: { type: String, required: true },
     location: { type: String, required: true },
     doctor_name: { type: String, default: '' },
