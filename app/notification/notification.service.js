@@ -21,11 +21,16 @@ async function getAllNotification() {
 }
 
 async function getNotificationById(id) {
-    const notification = await Notification.findById(id).select('-hash').lean();
-    if (!notification)
-        return { error: true, message: "Notification not found" };
-    const stats = await Notification.findOne({ _id: id }).lean();
-    return { success: true, notification: { ...notification, ...stats } };
+    const notification = await Notification.find({uid: id}).select('-hash').lean();
+    if (notification.length==0)
+    {
+        return { success: false, message: "No Notifications received" };
+    }
+    else
+    {
+        return { success: true, notification };
+    }
+    
 }
 
 async function deleteNotification(id) {
