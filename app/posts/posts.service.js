@@ -338,12 +338,14 @@ async function getPostLikeById(id) {
     if (post.length==0)
         return { success: false, message: "Post not found" };
     else
+    {
         var arr = []
         for(var i = 0; i<post.length; i++)
         {
             arr.push(await Post.find({_id: post[i].id}).select('-hash').lean())
         }
-        return { success: true, post };
+        return { success: true, arr };
+    }
 }
 
 async function deletePostLike(id) {
