@@ -342,7 +342,7 @@ async function getPostLikeById(id) {
         var arr = []
         for(var i = 0; i<post.length; i++)
         {
-            arr.push(await Post.find({_id: post[i].id}).select('-hash').lean())
+            arr.push(await Post.find({_id: post[i].id}).select('-hash').lean()[0])
         }
         return { success: true, arr };
     }
