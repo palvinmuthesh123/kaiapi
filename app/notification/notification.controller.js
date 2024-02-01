@@ -2,13 +2,6 @@ const express = require('express');
 const router = express.Router();
 const cmsService = require('./notification.service');
 
-// routes
-// router.get('/cms', getAllCMS);
-// router.get('/cms/:id', getCMSById);
-// router.delete('/cms/:id', deleteCMS);
-// router.post('/cms' ,createCMS);
-// router.post('/updatecms' ,updateCMS);
-
 router.get('/notifications', getAllNotification);
 router.get('/notification/:id', getNotificationById);
 router.delete('/notification/:id', deleteNotification);

@@ -25,6 +25,7 @@ app.use((req,res,next) => {
 //static
 app.use('/static', express.static(path.join(__dirname, 'static')));
 // api routes
+app.use('/notification', require('./app/notification/notification.controller'));
 app.use('/user', require('./app/users/users.controller'));
 app.use('/home', require('./app/home/home.controller'));
 app.use('/posts', require('./app/posts/posts.controller'));
