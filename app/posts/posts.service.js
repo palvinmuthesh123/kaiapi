@@ -334,10 +334,15 @@ async function getAllPostLikes() {
 }
 
 async function getPostLikeById(id) {
-    const post = await PostLike.findById(id).select('-hash').lean();
-    if (!post)
-        return { error: true, message: "Post not found" };
+    const post = await PostLike.find({uid: id}).select('-hash').lean();
+    if (post.length==0)
+        return { success: false, message: "Post not found" };
     else
+        var arr = []
+        for(var i = 0; i<post.length; i++)
+        {
+            arr.push(await Post.find({_id: post[i].id}).select('-hash').lean())
+        }
         return { success: true, post };
 }
 
