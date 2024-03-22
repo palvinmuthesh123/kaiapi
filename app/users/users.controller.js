@@ -12,6 +12,7 @@ router.post('/editdoctorprofile', editDoctorProfile);
 router.post('/register', register);
 router.post('/doctorregister', doctorRegister);
 router.get('/', getAll);
+router.post('/email', chechEmail);
 router.get('/experts', getAllExperts);
 router.get('/atheletes/:id', getAllAthletesByIds);
 router.get('/doctors', getAllDoctor);
@@ -50,6 +51,12 @@ function updateMessage(req, res, next) {
 
 function sendMessage(req, res, next) {
     userService.sendMessage(req.body)
+        .then(user => res.json(user))
+        .catch(err => next(err));
+}
+
+function chechEmail(req, res, next) {
+    userService.chechEmail(req.body)
         .then(user => res.json(user))
         .catch(err => next(err));
 }

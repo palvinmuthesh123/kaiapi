@@ -18,6 +18,7 @@ module.exports = {
     authenticate,
     doctorAuthenticate,
     getAll,
+    chechEmail,
     getAllExperts,
     getAllAthletesByIds,
     getAllDoctor,
@@ -375,6 +376,16 @@ async function changePassword(userParam) {
 
 async function getAll() {
     return await User.find().select('-hash');
+}
+
+async function chechEmail(data) {
+    const user = await User.find({email: data.email}).select('-hash');
+    if(user.length!=0) {
+        return {success: true, message: 'Email exists'}
+    }
+    else {
+        return {success: false, message: 'Email does not exists'}
+    }
 }
 
 async function getAllExperts() {

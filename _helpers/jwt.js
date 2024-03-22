@@ -12,6 +12,7 @@ function jwt() {
             '/',
             '/static',
             '/user/cities',
+            '/user/email',
             '/user/login',
             '/user/register',
             '/user/doctorregister',
