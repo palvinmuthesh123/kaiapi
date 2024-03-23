@@ -1480,7 +1480,10 @@ async function getAllPayments() {
     {
         for(var i = 0; i<payings.length; i++) {
             var user = await User.find({_id: payings[i].patient_id}).select('-hash');
-            arr.push(user[0])
+            arr.push({
+                payment: payings[i],
+                user: user[0]
+            })
         }
         return { success: true, arr };
     }
