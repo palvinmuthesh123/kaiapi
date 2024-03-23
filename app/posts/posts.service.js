@@ -1474,7 +1474,20 @@ async function createPayment(contents) {
 }
 
 async function getAllPayments() {
-    return await Payment.find().select('-hash');
+    const payings = await Payment.find().select('-hash');
+    var arr = []
+    if(payings.length!=0)
+    {
+        for(var i = 0; i<payings.length; i++) {
+            var user = await User.find({_id: payings[i].patient_id}).select('-hash');
+            arr.push(user[0])
+        }
+        return { success: true, arr };
+    }
+    else
+    {
+        return { success: false, message: "No Payment Done" };
+    }
 }
 
 async function getPaymentById(id) {
