@@ -664,7 +664,19 @@ async function createJobsApply(contents) {
 }
 
 async function getAllJobsApplys() {
-    return await JobsApply.find().select('-hash');
+    const jobsapply = await JobsApply.find().select('-hash');
+    var arr = []
+    if (jobsapply.length==0)
+        return { success: false, message: "Jobs Apply not found" };
+    else
+    {
+        for(var i = 0; i<jobsapply.length; i++)
+        {
+            var job = await Athlete.find({_id: jobsapply[i].uid}).select('-hash').lean()
+            arr.push(job[0])
+        }
+        return { success: true, arr };
+    }
 }
 
 async function getJobsApplyById(id) {
