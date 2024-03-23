@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     patient_id: { type: String, required: true }, 
     name: { type: String, required: true },
-    payment_date: { type: String, required: true },
     payment_method: { type: String, required: true },
     total_amount: { type: String, required: true },
     discount: { type: String, required: true },
