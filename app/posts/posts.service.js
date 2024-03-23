@@ -672,7 +672,7 @@ async function getAllJobsApplys() {
     {
         for(var i = 0; i<jobsapply.length; i++)
         {
-            var job = await Athlete.find({_id: jobsapply[i].uid}).select('-hash').lean()
+            var job = await User.find({_id: jobsapply[i].uid}).select('-hash').lean()
             arr.push(job[0])
         }
         return { success: true, arr };
